@@ -1,5 +1,35 @@
 (function(){
-  let results;
+  let queue = [] , paused = false, results;
+
+  this.test = function (name, fn){
+    queue.push(function(){
+      results = document.getElementById("results");
+      results = assert(true, name).appendChild(
+          document.createElement("ul"));
+      fn();
+    });
+    runTest();
+  };
+
+  this.pause = function(){
+    paused = true;
+  };
+
+  this.resume = function(){
+    paused = false;
+    setTimeout(runTest, 1);
+  };
+
+  function runTest(){
+    if(!paused && queue.length){
+      (queue.shift())();
+      if(!paused){
+        resume();
+      }
+    }
+  }
+
+
   this.assert = function assert(value, desc) {
     let li = document.createElement("li");
     li.className = value ? "pass" : "fail";
@@ -10,28 +40,22 @@
     }
     return li;
   };
-  this.test = function test(name, fn){
-    results = document.getElementById("results");
-    results = assert(true, name).appendChild(
-      document.createElement("ul")
-    );
-    fn();
-  };
+
 })();
 
 window.onload = function(){
-  test("testA", function(){
-    assert(true, "第1のアサート");
-    assert(true, "第2のアサート");
-    assert(true, "第3のアサート");
+  test("非同期テスト１", function(){
+    pause();
+    setTimeout(function(){
+      assert(false, "第1のアサート");
+      resume();
+    },1000);
   });
-  test("testB", function(){
-    assert(true, "第1のアサート");
-    assert(false, "第2のアサート");
-    assert(true, "第3のアサート");
-  });
-  test("testC", function(){
-    assert(null, "第1のアサート");
-    assert(5, "第2のアサート");
+  test("非同期テスト２", function(){
+    pause();
+    setTimeout(function(){
+      assert(true, "第2のアサート");
+      resume();
+    },1000);
   });
 }
