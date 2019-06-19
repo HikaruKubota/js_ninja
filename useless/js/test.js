@@ -29,7 +29,6 @@
     }
   }
 
-
   this.assert = function assert(value, desc) {
     let li = document.createElement("li");
     li.className = value ? "pass" : "fail";
@@ -42,20 +41,3 @@
   };
 
 })();
-
-window.onload = function(){
-  test("非同期テスト１", function(){
-    pause();
-    setTimeout(function(){
-      assert(false, "第1のアサート");
-      resume();
-    },1000);
-  });
-  test("非同期テスト２", function(){
-    pause();
-    setTimeout(function(){
-      assert(true, "第2のアサート");
-      resume();
-    },1000);
-  });
-}
