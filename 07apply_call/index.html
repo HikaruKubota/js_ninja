@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" href="./css/master.css">
+    <script type="text/javascript">
+    function assert(value, desc){
+      let li = document.createElement("li");
+      li.className = value ? "pass" : "fail";
+      li.appendChild(document.createTextNode(desc));
+      document.getElementById("results").appendChild(li);
+    }
+    function juggle(){
+      let result = 0;
+      for(let i = 0; i < arguments.length;i++){
+        result += arguments[i];
+      }
+      this.result = result;
+    }
+
+    let ninja1 = {};
+    let ninja2 = {};
+
+    juggle.apply(ninja1,[1,2,3,4]);
+    juggle.call(ninja2,1,2,3,4);
+    window.onload = function(){
+      assert(ninja1.result === 10, "juggle vis apply");
+      assert(ninja2.result === 10, "juggle vis call");      
+    }
+    </script>
+
+  </head>
+  <body>
+    <ul id="results"></ul>
+  </body>
+</html>

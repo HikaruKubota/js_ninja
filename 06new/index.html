@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <link rel="stylesheet" href="./css/master.css">
+    <script type="text/javascript">
+    this.assert = function assert(value, desc){
+      let li = document.createElement("li");
+      li.className = value ? "pass" : "fail";
+      li.appendChild(document.createTextNode(desc));
+      document.getElementById("results").appendChild(li);
+    }
+
+    function Ninja(){
+      this.skulk = function(){return this;};
+    }
+
+    let ninja1 = new Ninja();
+    let ninja2 = new Ninja();
+
+    window.onload = function(){
+      assert(ninja1.skulk() === ninja1,
+      "The 1st ninja is skulking");
+
+      assert(ninja2.skulk() === ninja2,
+      "The 2nd ninja is skulking");
+    }
+
+    </script>
+
+  </head>
+  <body>
+    <ul id="results"></ul>
+  </body>
+</html>
