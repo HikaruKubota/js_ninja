@@ -20,7 +20,7 @@
     setTimeout(runTest, 1);
   };
 
-  function runTest(){
+  this.runTest = function(){
     if(!paused && queue.length){
       (queue.shift())();
       if(!paused){
